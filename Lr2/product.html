@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Купить iPhone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-white">
+    <nav class="nav-glass fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 flex h-16 items-center justify-between">
+            <a href="index.html" class="text-blue-600 font-medium flex items-center hover:opacity-70 transition">
+                <i class="fas fa-chevron-left mr-2"></i> Назад в каталог
+            </a>
+            <div class="relative cursor-pointer" id="cart-trigger">
+                <i class="fas fa-shopping-bag text-xl"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold">Корзина</h2>
+            <button id="close-cart" type="button" class="text-gray-400 hover:text-black" aria-label="Закрыть корзину"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto">
+            <!-- Items will be here -->
+            <p class="text-gray-400 text-center mt-10">Корзина пуста</p>
+        </div>
+        <div class="border-t pt-6 mt-6">
+            <div class="flex justify-between mb-4 font-bold text-xl">
+                <span>Итого:</span>
+                <span id="cart-total">0 ₽</span>
+            </div>
+            <button type="button" class="w-full bg-black text-white py-4 rounded-2xl font-bold hover:bg-gray-800 transition">Оформить заказ</button>        </div>
+    </div>
+
+    <main class="pt-32 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <!-- Галерея фото -->                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-[32px] aspect-square flex items-center justify-center overflow-hidden border border-gray-100 p-8">
+                        <img id="main-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="iPhone" class="h-full object-contain transition duration-500">
+                    </div>
+                    <div class="grid grid-cols-3 gap-4" id="image-thumbnails">
+                        <!-- Thumbnails will be here -->
+                    </div>
+                </div>
+                <!-- Информация о товаре -->
+                <div>
+                    <h1 id="product-title" class="text-5xl font-bold mb-2">iPhone</h1>
+                    <div id="product-badge" class="inline-block bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-bold mb-6">Оригинал</div>
+
+                    <p id="product-desc" class="text-lg text-gray-600 mb-8 leading-relaxed">                        Это устройство сочетает в себе передовые технологии, невероятную производительность и потрясающую систему камер. Идеальный выбор для тех, кто ценит качество и стиль.
+                    </p>
+
+                    <!-- Выбор памяти -->
+                    <div class="mb-10">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Объем памяти</h3>
+                        <div class="flex gap-4">
+                            <button type="button" class="storage-btn px-6 py-3 border-2 border-gray-200 rounded-2xl font-bold hover:border-blue-500 transition" data-size="128">128 GB</button>
+                            <button type="button" class="storage-btn px-6 py-3 border-2 border-gray-200 rounded-2xl font-bold hover:border-blue-500 transition" data-size="256">256 GB</button>
+                            <button type="button" class="storage-btn px-6 py-3 border-2 border-gray-200 rounded-2xl font-bold hover:border-blue-500 transition" data-size="512">512 GB</button>
+                        </div>                    </div>
+
+                    <!-- Характеристики -->
+                    <div class="mb-10">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Характеристики</h3>
+                        <ul class="space-y-3">
+                            <li class="flex justify-between border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Модель</span>
+                                <span class="font-medium" id="spec-model">-</span>
+                            </li>
+                            <li class="flex justify-between border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Память</span>
+                                <span class="font-medium" id="spec-storage">128 GB</span>
+                            </li>
+                            <li class="flex justify-between border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Процессор</span>
+                                <span class="font-medium">Apple A-Series Bionic</span>
+                            </li>
+                            <li class="flex justify-between border-b border-gray-100 pb-2">
+                                <span class="text-gray-500">Дисплей</span>
+                                <span class="font-medium">Super Retina XDR</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <span class="text-gray-400 block text-sm">Цена</span>
+                            <span id="product-price" class="text-4xl font-bold">99 990 ₽</span>
+                        </div>
+                    </div>
+
+                    <button id="add-to-cart" type="button" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                        Добавить в корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const model = params.get('model');
+        const type = params.get('type');
+        let currentStorage = "128";
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateUI() {
+            if (model && type) {
+                const fullName = `iPhone ${model} ${type} ${currentStorage}GB`;
+                document.getElementById('product-title').innerText = fullName;
+                document.getElementById('spec-model').innerText = `iPhone ${model} ${type}`;
+                document.getElementById('spec-storage').innerText = `${currentStorage} GB`;
+                document.title = `Купить ${fullName}`;
+                
+                // Формирование пути к изображению на основе модели и типа
+                let modelKey = `iphone ${model}`;
+                if (type.toLowerCase() !== 'basic') {
+                    modelKey += ` ${type.toLowerCase()}`;
+                }
+                
+                // Маппинг расширений (так как они разные в папке image)
+                const extensions = {
+                    'iphone 11': 'webp', 'iphone 11 pro': 'webp', 'iphone 11 pro max': 'png',
+                    'iphone 12': 'jpg', 'iphone 12 pro': 'jpg', 'iphone 12 pro max': 'webp',
+                    'iphone 13': 'jpg', 'iphone 13 pro': 'webp', 'iphone 13 pro max': 'webp',
+                    'iphone 14': 'jpg', 'iphone 14 pro': 'webp', 'iphone 14 pro max': 'jpg',
+                    'iphone 15': 'jpg', 'iphone 15 pro': 'jpeg', 'iphone 15 pro max': 'jpg',
+                    'iphone 16': 'webp', 'iphone 16 pro': 'webp', 'iphone 16 pro max': 'webp',
+                    'iphone 17': 'jpg', 'iphone 17 pro': 'jpg'
+                };
+                
+                let imgUrl;
+                if (model === '17' && type.toLowerCase() === 'pro max') {
+                    imgUrl = 'image/iphone-17-promax-orange.webp';
+                } else {
+                    const ext = extensions[modelKey] || 'jpg';
+                    imgUrl = `image/${modelKey}.${ext}`;
+                }
+                
+                document.getElementById('main-img').src = imgUrl;                
+                // Миниатюры
+                const thumbContainer = document.getElementById('image-thumbnails');
+                thumbContainer.innerHTML = '';
+                for(let i=0; i<3; i++) {
+                    thumbContainer.innerHTML += `
+                        <div class="bg-gray-50 rounded-2xl aspect-square flex items-center justify-center border border-gray-100 cursor-pointer hover:border-blue-500 transition p-2">
+                            <img src="${imgUrl}" class="h-full object-contain opacity-50 hover:opacity-100 transition">
+                        </div>
+                    `;
+                }
+                
+                // Динамическая цена в зависимости от модели и типа
+                let basePrice = 40000 + (parseInt(model) - 11) * 15000;
+                if (type.toLowerCase().includes('pro')) basePrice += 20000;
+                if (type.toLowerCase().includes('max')) basePrice += 10000;
+                
+                const storageAdd = (currentStorage === "256" ? 15000 : (currentStorage === "512" ? 35000 : 0));
+                const finalPrice = basePrice + storageAdd;
+                
+                document.getElementById('product-price').innerText = `${finalPrice.toLocaleString()} ₽`;
+
+                if (parseInt(model) >= 16) {
+                    document.getElementById('product-desc').innerText = `Новейший iPhone ${model} ${type} открывает новую эру возможностей с искусственным интеллектом Apple Intelligence и титановым корпусом.`;
+                }
+            }
+            renderCart();
+        }
+        // Выбор памяти
+        const buttons = document.querySelectorAll('.storage-btn');
+        buttons.forEach(btn => {
+            if(btn.dataset.size === currentStorage) btn.classList.add('active');
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentStorage = btn.dataset.size;
+                updateUI();
+            });
+        });
+
+        // Корзина
+        const cartModal = document.getElementById('cart-modal');
+        document.getElementById('cart-trigger').onclick = () => cartModal.classList.add('active');
+        document.getElementById('close-cart').onclick = () => cartModal.classList.remove('active');
+
+        // Закрытие по клику вне модалки
+        window.onclick = (e) => {
+            if (e.target == cartModal) cartModal.classList.remove('active');
+        };
+
+        // Слушатель изменений в localStorage для синхронизации вкладок
+        window.addEventListener('storage', () => {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            renderCart();
+        });
+
+        document.getElementById('add-to-cart').onclick = () => {
+            const item = {
+                id: `${model}-${type}-${currentStorage}-${Date.now()}`,
+                name: `iPhone ${model} ${type}`,
+                storage: currentStorage,
+                price: parseInt(document.getElementById('product-price').innerText.replace(/\s/g, '').replace('₽', ''))
+            };
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            cartModal.classList.add('active');
+        };
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
+            
+            countBadge.innerText = cart.length;
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center mt-10">Корзина пуста</p>';
+                totalEl.innerText = '0 ₽';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map((item, index) => {
+                total += item.price;
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <div class="font-bold">${item.name}</div>
+                            <div class="text-sm text-gray-400">${item.storage} GB</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">${item.price.toLocaleString()} ₽</div>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 text-xs">Удалить</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            totalEl.innerText = `${total.toLocaleString()} ₽`;
+        }
+
+        window.removeFromCart = (index) => {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        updateUI();
+    </script></body>
+</html>

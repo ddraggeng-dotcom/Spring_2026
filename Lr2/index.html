@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Store | Линейка 11 - 17</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="nav-glass fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between h-16 items-center">
+            <div class="text-2xl font-bold tracking-tighter">iStore</div>
+            <div class="hidden md:flex space-x-8 font-medium items-center">
+                <a href="#catalog" class="hover:opacity-60 transition">Каталог</a>
+                <a href="#order" class="bg-black text-white px-5 py-2 rounded-full text-sm hover:bg-gray-800 transition">Заказать</a>
+                <div class="relative cursor-pointer ml-4" id="cart-trigger">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold">Корзина</h2>
+            <button id="close-cart" type="button" class="text-gray-400 hover:text-black" aria-label="Закрыть корзину"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto">
+            <p class="text-gray-400 text-center mt-10">Корзина пуста</p>
+        </div>
+        <div class="border-t pt-6 mt-6">
+            <div class="flex justify-between mb-4 font-bold text-xl">
+                <span>Итого:</span>
+                <span id="cart-total">0 ₽</span>
+            </div>
+            <button type="button" class="w-full bg-black text-white py-4 rounded-2xl font-bold hover:bg-gray-800 transition">Оформить заказ</button>
+        </div>
+    </div>
+
+    <section class="section-padding pt-32 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="hero-title mb-6">Вся линейка iPhone.</h1>
+            <p class="text-xl text-gray-500 mb-10">Выберите свою модель от iPhone 11 до новейшего iPhone 17.</p>
+        </div>
+    </section>
+
+    <section id="catalog" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="product-grid">
+                <!-- JS populated -->
+            </div>
+        </div>
+    </section>
+
+    <section id="order" class="section-padding">
+        <div class="max-w-xl mx-auto bg-white p-10 rounded-[32px] shadow-sm border border-gray-100">
+            <h2 class="text-3xl font-bold mb-8 text-center">Связаться с нами</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Имя" class="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500">
+                <input type="tel" placeholder="Телефон" class="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 transition">Отправить заявку</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        const models = [
+            { id: 17, name: 'iPhone 17', color: 'bg-indigo-50', img: 'image/iphone 17.jpg' },
+            { id: 16, name: 'iPhone 16', color: 'bg-blue-50', img: 'image/iphone 16.webp' },
+            { id: 15, name: 'iPhone 15', color: 'bg-pink-50', img: 'image/iphone 15.jpg' },
+            { id: 14, name: 'iPhone 14', color: 'bg-yellow-50', img: 'image/iphone 14.jpg' },
+            { id: 13, name: 'iPhone 13', color: 'bg-green-50', img: 'image/iphone 13.jpg' },
+            { id: 12, name: 'iPhone 12', color: 'bg-gray-100', img: 'image/iphone 12.jpg' },
+            { id: 11, name: 'iPhone 11', color: 'bg-orange-50', img: 'image/iphone 11.webp' }
+        ];
+        const grid = document.getElementById('product-grid');
+        
+        models.forEach(m => {
+            grid.innerHTML += `
+                <div class="card-container group">
+                    <div class="h-64 ${m.color} rounded-2xl mb-6 flex items-center justify-center p-4">
+                        <img src="${m.img}" alt="${m.name}" class="h-full object-contain group-hover:scale-110 transition duration-500">
+                    </div>
+                    <h3 class="text-2xl font-bold">${m.name}</h3>
+                    <p class="text-gray-400 mt-2">Наведите для выбора</p>
+                    
+                    <div class="model-overlay">
+                        <span class="text-xs font-bold text-gray-400 mb-4 uppercase tracking-widest">Выберите версию</span>
+                        <a href="product.html?model=${m.id}&type=Basic" class="btn-variant">Basic</a>
+                        <a href="product.html?model=${m.id}&type=Pro" class="btn-variant">Pro</a>
+                        <a href="product.html?model=${m.id}&type=Pro Max" class="btn-variant">Pro Max</a>
+                    </div>
+                </div>
+            `;
+        });
+        // Логика корзины для главной страницы
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartModal = document.getElementById('cart-modal');
+        const cartTrigger = document.getElementById('cart-trigger');
+        const closeCart = document.getElementById('close-cart');
+
+        cartTrigger.onclick = () => cartModal.classList.add('active');
+        closeCart.onclick = () => cartModal.classList.remove('active');
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
+            
+            countBadge.innerText = cart.length;
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center mt-10">Корзина пуста</p>';
+                totalEl.innerText = '0 ₽';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map((item, index) => {
+                total += item.price;
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <div class="font-bold">${item.name}</div>
+                            <div class="text-sm text-gray-400">${item.storage} GB</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">${item.price.toLocaleString()} ₽</div>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 text-xs">Удалить</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            totalEl.innerText = `${total.toLocaleString()} ₽`;
+        }
+
+        window.removeFromCart = (index) => {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        // Закрытие по клику вне модалки
+        window.onclick = (e) => {
+            if (e.target == cartModal) cartModal.classList.remove('active');
+        };
+
+        // Синхронизация вкладок
+        window.addEventListener('storage', () => {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            renderCart();
+        });
+
+        renderCart();
+    </script>
+</body>
+</html>
